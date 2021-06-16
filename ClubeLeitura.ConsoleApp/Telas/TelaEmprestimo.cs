@@ -134,7 +134,7 @@ namespace ClubeLeitura.ConsoleApp.Telas
         {
             ConfigurarTela("Visualizando empréstimos em aberto...");
 
-            List<Emprestimo> lista = controladorEmprestimo.SelecionarTodosRegistros();
+            List<Emprestimo> lista = controladorEmprestimo.SelecionarEmprestimosAbertos();
 
             if (lista.Count == 0)
             {

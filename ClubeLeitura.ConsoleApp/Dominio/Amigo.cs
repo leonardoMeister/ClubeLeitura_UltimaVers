@@ -20,6 +20,7 @@ namespace ClubeLeitura.ConsoleApp.Dominio
         }
         public Amigo()
         {
+            historicoEmprestimos = new List<Emprestimo>();
         }
         public Amigo(int id)
         {
@@ -28,6 +29,7 @@ namespace ClubeLeitura.ConsoleApp.Dominio
 
         public Amigo(string nome, string nomeResponsavel,string telefone, string deOndeEh)
         {
+            historicoEmprestimos = new List<Emprestimo>();
             this.id = GerarId();
             this.nome = nome;
             this.nomeResponsavel = nomeResponsavel;

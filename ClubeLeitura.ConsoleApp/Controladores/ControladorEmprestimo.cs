@@ -9,62 +9,40 @@ namespace ClubeLeitura.ConsoleApp.Controladores
         public string RegistrarEmprestimo(Amigo amigo, Revista revista, DateTime data)
         {
             Emprestimo emprestimo = new Emprestimo(amigo, revista, data);
-
             string resultadoValidacao = emprestimo.Validar();
 
             if (resultadoValidacao == "EMPRESTIMO_VALIDO")
             {
                 amigo.RegistrarEmprestimo(emprestimo);
                 revista.RegistrarEmprestimo(emprestimo);
-
-                emprestimo.id = emprestimo.GerarId();
                 AdicionarRegistro(emprestimo);
             }
-
             return resultadoValidacao;
         }
 
         internal bool RegistrarDevolucao(int idEmprestimo, DateTime data)
         {
-            Emprestimo emprestimo = (Emprestimo)SelecionarRegistroPorId(new Emprestimo(idEmprestimo));
-
+            Emprestimo emprestimo = SelecionarRegistroPorId(new Emprestimo(idEmprestimo));
             emprestimo.Fechar(data);
 
             return true;
         }
-        internal Emprestimo[] SelecionarEmprestimosEmAberto()
+
+        internal List<Emprestimo> SelecionarEmprestimosAbertos()
         {
-            Emprestimo[] emprestimosEmAberto = new Emprestimo[QtdEmprestimosEmAberto()];
+            List<Emprestimo> emprestimosAbertos = new List<Emprestimo>();
 
-            List<Emprestimo> lista= SelecionarTodosRegistros();
-
-            int i = 0;
+            List<Emprestimo> lista = SelecionarTodosRegistros();
 
             foreach (Emprestimo e in lista)
             {
                 if (e.estaAberto)
                 {
-                    emprestimosEmAberto[i++] = e;
+                    emprestimosAbertos.Add(e);
                 }
             }
 
-            return emprestimosEmAberto;
-        }
-        private int QtdEmprestimosEmAberto()
-        {
-            List<Emprestimo> lista = SelecionarTodosRegistros();
-
-            int numeroEmprestimosEmAberto = 0;
-
-            foreach (Emprestimo emprestimo in lista)
-            {
-                if (emprestimo.estaAberto)
-                {
-                    numeroEmprestimosEmAberto++;
-                }
-            }
-
-            return numeroEmprestimosEmAberto;
+            return emprestimosAbertos;
         }
         internal List<Emprestimo> SelecionarEmprestimosFechados(int mes)
         {

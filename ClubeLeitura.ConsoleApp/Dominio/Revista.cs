@@ -29,6 +29,7 @@ namespace ClubeLeitura.ConsoleApp.Dominio
         }
         public Revista(string nome, string colecao, int numeroEdicao, Caixa caixa)
         {
+            historicoEmprestimos = new List<Emprestimo>();
             this.id = GerarId();
             this.nome = nome;
             this.colecao = colecao;
